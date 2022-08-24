@@ -3,9 +3,8 @@ package wuid
 import (
 	"errors"
 
-	"github.com/edwingeng/slog"
-	"github.com/edwingeng/wuid/internal"
 	"github.com/go-redis/redis"
+	"github.com/r2b89/wuid/internal"
 )
 
 // WUID is an extremely fast unique number generator.
@@ -14,8 +13,8 @@ type WUID struct {
 }
 
 // NewWUID creates a new WUID instance.
-func NewWUID(name string, logger slog.Logger, opts ...Option) *WUID {
-	return &WUID{w: internal.NewWUID(name, logger, opts...)}
+func NewWUID(name string, opts ...Option) *WUID {
+	return &WUID{w: internal.NewWUID(name, opts...)}
 }
 
 // Next returns the next unique number.
@@ -51,7 +50,6 @@ func (this *WUID) LoadH28FromRedis(newClient NewClient, key string) error {
 	}
 
 	this.w.Reset(h28 << 36)
-	this.w.Logger.Infof("<wuid> new h28: %d. name: %s", h28, this.w.Name)
 
 	this.w.Lock()
 	defer this.w.Unlock()

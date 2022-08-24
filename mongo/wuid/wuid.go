@@ -5,8 +5,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/edwingeng/slog"
-	"github.com/edwingeng/wuid/internal"
+	"github.com/r2b89/wuid/internal"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -21,8 +20,8 @@ type WUID struct {
 }
 
 // NewWUID creates a new WUID instance.
-func NewWUID(name string, logger slog.Logger, opts ...Option) *WUID {
-	return &WUID{w: internal.NewWUID(name, logger, opts...)}
+func NewWUID(name string, opts ...Option) *WUID {
+	return &WUID{w: internal.NewWUID(name, opts...)}
 }
 
 // Next returns the next unique number.
@@ -87,7 +86,6 @@ func (this *WUID) LoadH28FromMongo(newClient NewClient, dbName, coll, docID stri
 	}
 
 	this.w.Reset(h28 << 36)
-	this.w.Logger.Infof("<wuid> new h28: %d. name: %s", h28, this.w.Name)
 
 	this.w.Lock()
 	defer this.w.Unlock()

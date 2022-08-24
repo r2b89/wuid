@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"sync"
 	"sync/atomic"
-
-	"github.com/edwingeng/slog"
 )
 
 const (
@@ -24,7 +22,6 @@ type WUID struct {
 	Step  int64
 	Floor int64
 
-	slog.Logger
 	Name        string
 	NoSec       bool
 	Section     int8
@@ -35,13 +32,8 @@ type WUID struct {
 }
 
 // NewWUID is for internal use only.
-func NewWUID(name string, logger slog.Logger, opts ...Option) (w *WUID) {
+func NewWUID(name string, opts ...Option) (w *WUID) {
 	w = &WUID{Step: 1, Name: name, NoSec: true}
-	if logger != nil {
-		w.Logger = logger
-	} else {
-		w.Logger = slog.NewConsoleLogger()
-	}
 	for _, opt := range opts {
 		opt(w)
 	}
@@ -60,15 +52,15 @@ func (this *WUID) Next() int64 {
 		go func() {
 			defer func() {
 				if r := recover(); r != nil {
-					this.Warnf("<wuid> panic, renew failed. name: %s, reason: %+v", this.Name, r)
+					fmt.Errorf("<wuid> panic, renew failed. name: %s, reason: %+v", this.Name, r)
 				}
 			}()
 
 			err := this.RenewNow()
 			if err != nil {
-				this.Warnf("<wuid> renew failed. name: %s, reason: %+v", this.Name, err)
+				fmt.Errorf("<wuid> renew failed. name: %s, reason: %+v", this.Name, err)
 			} else {
-				this.Infof("<wuid> renew succeeded. name: %s", this.Name)
+				fmt.Errorf("<wuid> renew failed. name: %s, reason: %+v", this.Name, this.Name)
 			}
 		}()
 	}

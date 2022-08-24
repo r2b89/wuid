@@ -8,8 +8,6 @@ import (
 	"sync/atomic"
 	"testing"
 	"time"
-
-	"github.com/edwingeng/slog"
 )
 
 func TestWUID_Next(t *testing.T) {
@@ -79,8 +77,7 @@ func TestWUID_Next_Panic(t *testing.T) {
 }
 
 func TestWUID_Next_Renew(t *testing.T) {
-	scav := slog.NewScavenger()
-	g := NewWUID("default", scav)
+	g := NewWUID("default")
 	g.Renew = func() error {
 		g.Reset(((atomic.LoadInt64(&g.N) >> 36) + 1) << 36)
 		return nil
@@ -104,12 +101,12 @@ func TestWUID_Next_Renew(t *testing.T) {
 	}
 
 	var numInfo int
-	scav.Filter(func(level, msg string) bool {
-		if level == slog.LevelInfo {
-			numInfo++
-		}
-		return true
-	})
+	//scav.Filter(func(level, msg string) bool {
+	//	if level == slog.LevelInfo {
+	//		numInfo++
+	//	}
+	//	return true
+	//})
 	if numInfo != 2 {
 		t.Fatalf("there should be 2 renew logs of the info type. actual: %d", numInfo)
 	}
@@ -117,8 +114,7 @@ func TestWUID_Next_Renew(t *testing.T) {
 
 func TestWUID_Step(t *testing.T) {
 	const step = 16
-	scav := slog.NewScavenger()
-	g := NewWUID("default", scav, WithStep(step, 0))
+	g := NewWUID("default", WithStep(step, 0))
 	g.Reset(17 << 36)
 	g.Renew = func() error {
 		g.Reset(((atomic.LoadInt64(&g.N) >> 36) + 1) << 36)
@@ -149,12 +145,12 @@ func TestWUID_Step(t *testing.T) {
 	}
 
 	var numInfo int
-	scav.Filter(func(level, msg string) bool {
-		if level == slog.LevelInfo {
-			numInfo++
-		}
-		return true
-	})
+	//scav.Filter(func(level, msg string) bool {
+	//	if level == slog.LevelInfo {
+	//		numInfo++
+	//	}
+	//	return true
+	//})
 	if numInfo != 2 {
 		t.Fatalf("there should be 2 renew logs of the info type. actual: %d", numInfo)
 	}
@@ -166,8 +162,7 @@ func TestWUID_Floor(t *testing.T) {
 	for loop := 0; loop < 10000; loop++ {
 		step := allSteps[r.Intn(len(allSteps))]
 		floor := r.Int63n(step)
-		scav := slog.NewScavenger()
-		g := NewWUID("default", scav, WithStep(step, floor))
+		g := NewWUID("default", WithStep(step, floor))
 		baseValue := r.Int63n(100) << 36
 		g.Reset(baseValue)
 
@@ -186,8 +181,7 @@ func TestWUID_Floor(t *testing.T) {
 }
 
 func TestWUID_Next_Renew_Fail(t *testing.T) {
-	scav := slog.NewScavenger()
-	g := NewWUID("default", scav)
+	g := NewWUID("default")
 	g.Renew = func() error {
 		return errors.New("foo")
 	}
@@ -205,20 +199,19 @@ func TestWUID_Next_Renew_Fail(t *testing.T) {
 	g.Next()
 
 	var numWarn int
-	scav = scav.Filter(func(level, msg string) bool {
-		if level == slog.LevelWarn {
-			numWarn++
-		}
-		return true
-	})
+	//scav = scav.Filter(func(level, msg string) bool {
+	//	if level == slog.LevelWarn {
+	//		numWarn++
+	//	}
+	//	return true
+	//})
 	if numWarn != 2 {
 		t.Fatalf("there should be 2 renew logs of the warn type. actual: %d", numWarn)
 	}
 }
 
 func TestWUID_Next_Renew_Panic(t *testing.T) {
-	scav := slog.NewScavenger()
-	g := NewWUID("default", scav)
+	g := NewWUID("default")
 	g.Renew = func() error {
 		panic("foo")
 	}
@@ -231,12 +224,12 @@ func TestWUID_Next_Renew_Panic(t *testing.T) {
 	time.Sleep(time.Millisecond * 200)
 
 	var numWarn int
-	scav = scav.Filter(func(level, msg string) bool {
-		if level == slog.LevelWarn {
-			numWarn++
-		}
-		return true
-	})
+	//scav = scav.Filter(func(level, msg string) bool {
+	//	if level == slog.LevelWarn {
+	//		numWarn++
+	//	}
+	//	return true
+	//})
 	if numWarn != 1 {
 		t.Fatalf("there should be 1 renew logs of the warn type. actual: %d", numWarn)
 	}
