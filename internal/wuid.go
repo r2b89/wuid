@@ -52,15 +52,13 @@ func (this *WUID) Next() int64 {
 		go func() {
 			defer func() {
 				if r := recover(); r != nil {
-					fmt.Errorf("<wuid> panic, renew failed. name: %s, reason: %+v", this.Name, r)
+					fmt.Printf("<wuid> panic, renew failed. name: %s, reason: %+v \n", this.Name, r)
 				}
 			}()
 
 			err := this.RenewNow()
 			if err != nil {
-				fmt.Errorf("<wuid> renew failed. name: %s, reason: %+v", this.Name, err)
-			} else {
-				fmt.Errorf("<wuid> renew failed. name: %s, reason: %+v", this.Name, this.Name)
+				fmt.Printf("<wuid> renew failed. name: %s, reason: %+v \n", this.Name, err)
 			}
 		}()
 	}
