@@ -249,7 +249,7 @@ func TestWithSection_Reset(t *testing.T) {
 				}
 			}()
 			for j := int8(1); j < 8; j++ {
-				g := NewWUID("default", nil, WithSection(j))
+				g := NewWUID("default", WithSection(j))
 				g.Reset(n)
 				v := atomic.LoadInt64(&g.N)
 				if v>>60 != int64(j) {
@@ -261,7 +261,7 @@ func TestWithSection_Reset(t *testing.T) {
 }
 
 func TestWithRenewCallback(t *testing.T) {
-	g := NewWUID("default", nil, WithH28Verifier(func(h28 int64) error {
+	g := NewWUID("default", WithH28Verifier(func(h28 int64) error {
 		if h28 >= 20 {
 			return errors.New("bomb")
 		}
