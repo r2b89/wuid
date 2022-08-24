@@ -32,7 +32,7 @@ func init() {
 
 	_, err = db.Exec(fmt.Sprintf("SELECT 1 FROM %s.%s LIMIT 1", dbName, table))
 	if err != nil {
-		format := "Table '%s.%s' doesn't exist. You can create it with github.com/edwingeng/wuid/mysql/db.sql"
+		format := "Table '%s.%s' doesn't exist. You can create it with github.com/rdb89/wuid/mysql/db.sql"
 		panic(fmt.Sprintf(format, dbName, table))
 	}
 }
