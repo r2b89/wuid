@@ -31,13 +31,13 @@ BenchmarkShortID     1738039           698.9 ns/op       311 B/op         11 all
 
 # Install
 ``` bash
-go get -u github.com/edwingeng/wuid
+go get -u github.com/r2b89/wuid
 ```
 
 # Usage examples
 ### Redis
 ``` go
-import "github.com/edwingeng/wuid/redis/wuid"
+import "github.com/r2b89/wuid/redis/wuid"
 
 newClient := func() (redis.Cmdable, bool, error) {
     var client redis.Cmdable
@@ -57,7 +57,7 @@ for i := 0; i < 10; i++ {
 
 ### MySQL
 ``` go
-import "github.com/edwingeng/wuid/mysql/wuid"
+import "github.com/r2b89/wuid/mysql/wuid"
 
 newDB := func() (*sql.DB, bool, error) {
     var db *sql.DB
@@ -77,7 +77,7 @@ for i := 0; i < 10; i++ {
 
 ### MongoDB
 ``` go
-import "github.com/edwingeng/wuid/mongo/wuid"
+import "github.com/r2b89/wuid/mongo/wuid"
 
 newClient := func() (*mongo.Client, bool, error) {
     var client *mongo.Client
@@ -97,7 +97,7 @@ for i := 0; i < 10; i++ {
 
 ### Callback
 ``` go
-import "github.com/edwingeng/wuid/callback/wuid"
+import "github.com/r2b89/wuid/callback/wuid"
 
 // Setup
 g := NewWUID("default", nil)

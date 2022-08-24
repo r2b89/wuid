@@ -7,10 +7,9 @@ import (
 	"time"
 
 	"github.com/bwmarrin/snowflake"
-	"github.com/edwingeng/slog"
-	"github.com/edwingeng/wuid/redis/wuid"
 	"github.com/go-redis/redis"
 	"github.com/oklog/ulid"
+	"github.com/r2b89/wuid/redis/wuid"
 	"github.com/rs/xid"
 	"github.com/satori/go.uuid"
 	"github.com/teris-io/shortid"
@@ -40,7 +39,7 @@ func BenchmarkWUID(b *testing.B) {
 		}), true, nil
 	}
 
-	g := wuid.NewWUID("default", slog.NewDumbLogger())
+	g := wuid.NewWUID("default")
 	err := g.LoadH28FromRedis(newClient, key)
 	if err != nil {
 		b.Fatal(err)
