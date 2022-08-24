@@ -143,8 +143,5 @@ You can specify a custom section ID for the generated numbers with `wuid.WithSec
 # Step
 You can customize the step value of `Next()` with `wuid.WithStep`.
 
-# Best practices
-- Pass a logger to `wuid.NewWUID` and keep an eye on the warnings that include "renew failed", which means that the low 36 bits are about to run out in hours to hundreds of hours, and WUID fails to get a new number from your data store.
-
 # Special thanks
 - [dustinfog](https://github.com/dustinfog)
