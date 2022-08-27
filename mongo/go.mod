@@ -1,4 +1,4 @@
-module github.com/r2b89/mongo
+module github.com/r2b89/wuid/mongo
 
 go 1.18
 

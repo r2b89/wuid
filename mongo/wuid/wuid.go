@@ -5,7 +5,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/r2b89/wuid/internal"
+	v2 "github.com/r2b89/v2"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -16,7 +16,7 @@ import (
 
 // WUID is an extremely fast unique number generator.
 type WUID struct {
-	w *internal.WUID
+	w *v2.WUID
 }
 
 // NewWUID creates a new WUID instance.

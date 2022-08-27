@@ -3,12 +3,12 @@ package wuid
 import (
 	"errors"
 
-	"github.com/r2b89/wuid/internal"
+	"github.com/r2b89/wuid/v1"
 )
 
 // WUID is an extremely fast unique number generator.
 type WUID struct {
-	w *internal.WUID
+	w *v1.WUID
 }
 
 // NewWUID creates a new WUID instance.

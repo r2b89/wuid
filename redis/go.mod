@@ -1,4 +1,4 @@
-module github.com/r2b89/redis
+module github.com/r2b89/wuid/redis
 
 go 1.18
 

@@ -1,5 +1,5 @@
 package v2
 
-type WUID interface {
+type Abstract_WUID interface {
 	Next() int64
 }

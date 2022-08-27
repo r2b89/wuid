@@ -1,4 +1,4 @@
-module github.com/r2b89/bench
+module github.com/r2b89/wuid/bench
 
 go 1.18
 

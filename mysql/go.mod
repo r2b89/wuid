@@ -1,4 +1,4 @@
-module github.com/r2b89/mysql
+module github.com/r2b89/wuid/mysql
 
 go 1.18
 
