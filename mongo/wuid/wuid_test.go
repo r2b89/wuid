@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/r2b89/wuid/internal"
+	v2 "github.com/r2b89/wuid/v2"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -84,7 +84,7 @@ func TestWUID_Next_Renew(t *testing.T) {
 	}
 
 	n1 := g.Next()
-	kk := ((internal.CriticalValue + internal.RenewIntervalMask) & ^internal.RenewIntervalMask) - 1
+	kk := ((v2.CriticalValue + v2.RenewIntervalMask) & ^v2.RenewIntervalMask) - 1
 
 	g.w.Reset((n1 >> 36 << 36) | kk)
 	g.Next()

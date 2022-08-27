@@ -9,7 +9,7 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/r2b89/wuid/internal"
+	"github.com/r2b89/wuid/v2"
 )
 
 func init() {
@@ -109,7 +109,7 @@ func TestWUID_Next_Renew(t *testing.T) {
 	}
 
 	n1 := g.Next()
-	kk := ((internal.CriticalValue + internal.RenewIntervalMask) & ^internal.RenewIntervalMask) - 1
+	kk := ((v2.CriticalValue + v2.RenewIntervalMask) & ^v2.RenewIntervalMask) - 1
 
 	g.w.Reset((n1 >> 36 << 36) | kk)
 	g.Next()

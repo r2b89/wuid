@@ -6,17 +6,17 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
-	"github.com/r2b89/wuid/internal"
+	"github.com/r2b89/wuid/v2"
 )
 
 // WUID is an extremely fast unique number generator.
 type WUID struct {
-	w *internal.WUID
+	w *v2.WUID
 }
 
 // NewWUID creates a new WUID instance.
 func NewWUID(name string, opts ...Option) *WUID {
-	return &WUID{w: internal.NewWUID(name, opts...)}
+	return &WUID{w: v2.NewWUID(name, opts...)}
 }
 
 // Next returns the next unique number.
@@ -73,19 +73,19 @@ func (this *WUID) RenewNow() error {
 	return this.w.RenewNow()
 }
 
-type Option = internal.Option
+type Option = v2.Option
 
 // WithSection adds a section ID to the generated numbers. The section ID must be in between [0, 7].
 func WithSection(section int8) Option {
-	return internal.WithSection(section)
+	return v2.WithSection(section)
 }
 
 // WithH28Verifier sets your own h28 verifier
 func WithH28Verifier(cb func(h28 int64) error) Option {
-	return internal.WithH28Verifier(cb)
+	return v2.WithH28Verifier(cb)
 }
 
 // WithStep sets the step and floor of Next()
 func WithStep(step int64, floor int64) Option {
-	return internal.WithStep(step, floor)
+	return v2.WithStep(step, floor)
 }
