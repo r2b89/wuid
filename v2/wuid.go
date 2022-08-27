@@ -1,4 +1,4 @@
-package pkg
+package v2
 
 import (
 	"errors"
@@ -16,7 +16,7 @@ const (
 	RenewIntervalMask int64 = 0x20000000 - 1
 )
 
-// WUID is for pkg use only.
+// WUID is for v2 use only.
 type WUID struct {
 	N     int64
 	Step  int64
@@ -31,7 +31,7 @@ type WUID struct {
 	Renew func() error
 }
 
-// NewWUID is for pkg use only.
+// NewWUID is for v2 use only.
 func NewWUID(name string, opts ...Option) (w *WUID) {
 	w = &WUID{Step: 1, Name: name, NoSec: true}
 	for _, opt := range opts {
@@ -40,7 +40,7 @@ func NewWUID(name string, opts ...Option) (w *WUID) {
 	return
 }
 
-// Next is for pkg use only.
+// Next is for v2 use only.
 func (this *WUID) Next() int64 {
 	x := atomic.AddInt64(&this.N, this.Step)
 	v := x & 0x0FFFFFFFFF
@@ -77,7 +77,7 @@ func (this *WUID) RenewNow() error {
 	return f()
 }
 
-// Reset is for pkg use only.
+// Reset is for v2 use only.
 func (this *WUID) Reset(n int64) {
 	if n < 0 {
 		panic(fmt.Errorf("n should never be negative. name: %s", this.Name))
@@ -89,7 +89,7 @@ func (this *WUID) Reset(n int64) {
 	}
 }
 
-// VerifyH28 is for pkg use only.
+// VerifyH28 is for v2 use only.
 func (this *WUID) VerifyH28(h28 int64) error {
 	if h28 <= 0 {
 		return errors.New("h28 must be positive. name: " + this.Name)
@@ -124,10 +124,10 @@ func (this *WUID) VerifyH28(h28 int64) error {
 	return nil
 }
 
-// Option is for pkg use only.
+// Option is for v2 use only.
 type Option func(*WUID)
 
-// WithSection is for pkg use only.
+// WithSection is for v2 use only.
 func WithSection(section int8) Option {
 	if section < 0 || section > 7 {
 		panic("section must be in between [0, 7]")
@@ -138,7 +138,7 @@ func WithSection(section int8) Option {
 	}
 }
 
-// WithH28Verifier is for pkg use only.
+// WithH28Verifier is for v2 use only.
 func WithH28Verifier(cb func(h28 int64) error) Option {
 	return func(w *WUID) {
 		w.H28Verifier = cb

@@ -1,4 +1,4 @@
-package pkg
+package v2
 
 import (
 	"errors"
