@@ -143,5 +143,8 @@ You can specify a custom section ID for the generated numbers with `wuid.WithSec
 # Step
 You can customize the step value of `Next()` with `wuid.WithStep`.
 
+# Diffences with original repository
+Removed logger dependency
+
 # Special thanks
 - [dustinfog](https://github.com/dustinfog)
